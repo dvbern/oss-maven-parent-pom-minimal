@@ -8,7 +8,7 @@ used by "pom" and "jar" packaging.
 
 
 In addition (and to comply to company standards), the following additional configuration is made:
-* Configure deployment to [DVB Nexus](https://nexus.dvbern.ch)
+* Configure deployment to DVB Nexus
 * Configure jgitflow
 * Configure static code analysis (spotbugs, pmd, checkstyle plugins)
 * Add sources.jar

@@ -91,8 +91,8 @@
         <skip-code-validation>false</skip-code-validation>
 
         <!-- Jenkins -->
-        <maven.repo.releases.url>releases-url-set-by-jenkins</maven.repo.releases.url>
-        <maven.repo.snapshots.url>snapshots-url-set-by-jenkins</maven.repo.snapshots.url>
+        <maven.repo.releases.oss.url>releases-url-set-by-jenkins</maven.repo.releases.oss.url>
+        <maven.repo.snapshots.oss.url>snapshots-url-set-by-jenkins</maven.repo.snapshots.oss.url>
         <dvb.git.serverId/>
     </properties>
 
