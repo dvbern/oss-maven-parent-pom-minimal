@@ -30,6 +30,7 @@ if (params.performRelease) {
 		nextreleaseversion = nextReleaseVersion
 		emailRecipients = recipients
 		jdkVersion = jdk
+		credentialsId = 'jenkins-github-token'
 	}
 } else {
 	node('docker') {
