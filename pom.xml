@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>ch.dvbern.oss.maven</groupId>
+    <artifactId>parent-minimal</artifactId>
+    <packaging>pom</packaging>
+    <name>Minimal Maven OSS Parent POM of DV Bern AG</name>
+    <version>1.0.0</version>
+
+    <description>Maven Einstellung, die allgemeine Gueltigkeit fuer die Open-Source-Projekte der DV Bern AG haben</description>
+
+    <organization>
+        <name>DV Bern AG</name>
+        <url>https://www.dvbern.ch/</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <profiles>
+        <profile>
+            <id>development-mode</id>
+            <activation>
+                <property>
+                    <name>skipTests</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <properties>
+                <skipTests>true</skipTests>
+                <skipITs>true</skipITs>
+                <!-- add a custom property for simpler integration into projects -->
+                <skip-code-validation>true</skip-code-validation>
+            </properties>
+        </profile>
+    </profiles>
+
+    <properties>
+        <maven-compiler-plugin.javaversion>11</maven-compiler-plugin.javaversion>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- plugin versions for default lifecycle -->
+        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
+        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
+        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+        <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
+        <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
+        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+
+        <!-- plugin versions for optional plugins -->
+        <maven-failsafe-plugin.version>${maven-surefire-plugin.version}</maven-failsafe-plugin.version>
+        <jgitflow-maven-plugin.version>1.0-m6</jgitflow-maven-plugin.version>
+        <spotbugs-maven-plugin.version>4.0.4</spotbugs-maven-plugin.version>
+        <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
+        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
+        <maven-checkstyle.version>8.34</maven-checkstyle.version>
+        <code-conventions.version>2.0.0</code-conventions.version>
+
+        <!-- maven-deploy-plugin -->
+        <maven-deploy-plugin.deployAtEnd>true</maven-deploy-plugin.deployAtEnd>
+        <maven-deploy-plugin.altDeploymentRepository />
+        <maven-deploy-plugin.altReleaseDeploymentRepository />
+        <maven-deploy-plugin.altSnapshotDeploymentRepository />
+
+        <!-- maven-enforcer-plugin -->
+        <maven-enforcer-plugin.requireMavenVersion.version>3.6.3</maven-enforcer-plugin.requireMavenVersion.version>
+        <maven-enforcer-plugin.requireJavaVersion.version>${maven-compiler-plugin.javaversion}</maven-enforcer-plugin.requireJavaVersion.version>
+        <maven-enforcer-plugin.skip>false</maven-enforcer-plugin.skip>
+        <maven-enforcer-plugin.requireReleaseDeps.onlyWhenRelease>true</maven-enforcer-plugin.requireReleaseDeps.onlyWhenRelease>
+        <maven-enforcer-plugin.requireReleaseDeps.failWhenParentIsSnapshot>true</maven-enforcer-plugin.requireReleaseDeps.failWhenParentIsSnapshot>
+        <maven-enforcer-plugin.requireReleaseDeps.searchTransitive>true</maven-enforcer-plugin.requireReleaseDeps.searchTransitive>
+        <maven-enforcer-plugin.requireReleaseDeps.phases>clean,deploy,site</maven-enforcer-plugin.requireReleaseDeps.phases>
+        <maven-enforcer-plugin.requirePluginVersions.unCheckedPlugins />
+        <maven-enforcer-plugin.requirePluginVersions.additionalPlugins />
+
+        <!-- ******** internal configuration ******** -->
+        <!-- used by the development-mode profile: enable projects to skip custom stuff in development-mode -->
+        <skip-code-validation>false</skip-code-validation>
+
+        <!-- Jenkins -->
+        <maven.repo.releases.oss.url>releases-url-set-by-jenkins</maven.repo.releases.oss.url>
+        <maven.repo.snapshots.oss.url>snapshots-url-set-by-jenkins</maven.repo.snapshots.oss.url>
+        <dvb.git.serverId />
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- maven-clean-plugin (configuration only: clean:"default-clean") -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven-clean-plugin.version}</version>
+                </plugin>
+
+                <!-- maven-enforcer-plugin (activate validate:enforce) -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${maven-enforcer-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>enforce</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <skip>${maven-enforcer-plugin.skip}</skip>
+                                <rules>
+                                    <requirePluginVersions>
+                                        <unCheckedPlugins>${maven-enforcer-plugin.requirePluginVersions.unCheckedPlugins}</unCheckedPlugins>
+                                        <additionalPlugins>${maven-enforcer-plugin.requirePluginVersions.additionalPlugins}</additionalPlugins>
+                                        <phases>${maven-enforcer-plugin.requireReleaseDeps.phases}</phases>
+                                    </requirePluginVersions>
+                                    <requireReleaseDeps>
+                                        <failWhenParentIsSnapshot>${maven-enforcer-plugin.requireReleaseDeps.failWhenParentIsSnapshot}</failWhenParentIsSnapshot>
+                                        <onlyWhenRelease>${maven-enforcer-plugin.requireReleaseDeps.onlyWhenRelease}</onlyWhenRelease>
+                                        <searchTransitive>${maven-enforcer-plugin.requireReleaseDeps.searchTransitive}</searchTransitive>
+                                    </requireReleaseDeps>
+                                    <requireMavenVersion>
+                                        <version>${maven-enforcer-plugin.requireMavenVersion.version}</version>
+                                    </requireMavenVersion>
+                                    <requireJavaVersion>
+                                        <version>${maven-enforcer-plugin.requireJavaVersion.version}</version>
+                                    </requireJavaVersion>
+                                </rules>
+                                <fail>true</fail>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- maven-resources-plugin (configuration only: process-resources:"default-resources", process-test-resources:"default-testResources") -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources-plugin.version}</version>
+                </plugin>
+
+                <!-- maven-compiler-plugin (configuration only: compile:"default-compile", test-compile:"default-testCompile") -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <release>${maven-compiler-plugin.javaversion}</release>
+                        <source>${maven-compiler-plugin.javaversion}</source>
+                        <target>${maven-compiler-plugin.javaversion}</target>
+                        <showWarnings>true</showWarnings>
+                        <failOnWarning>true</failOnWarning>
+                    </configuration>
+                </plugin>
+
+                <!-- maven-surefire-plugin (configuration only: test:"default-test") -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                </plugin>
+
+                <!-- maven-jar-plugin (configuration only: package:"default-jar") -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven-jar-plugin.version}</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            </manifest>
+                            <manifestEntries>
+                                <Build-Timestamp>${maven.build.timestamp}</Build-Timestamp>
+                                <OS-Name>${os.name}</OS-Name>
+                                <Artifact-Name>${project.name}</Artifact-Name>
+                                <Version>${project.version}</Version>
+                                <Artifact-Group>${project.groupId}</Artifact-Group>
+                                <Description>${project.description}</Description>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+
+                <!-- maven-source-plugin (add package:jar-no-fork) -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>${maven-source-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <!-- maven-install-plugin (configuration only: install:"default-install") -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>${maven-install-plugin.version}</version>
+                </plugin>
+
+                <!-- maven-deploy-plugin (configuration only: deploy:"default-deploy") -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>${maven-deploy-plugin.version}</version>
+                    <configuration>
+                        <!-- alt: primarily for use by Jenkins -->
+                        <altDeploymentRepository>${maven-deploy-plugin.altDeploymentRepository}</altDeploymentRepository>
+                        <altReleaseDeploymentRepository>${maven-deploy-plugin.altReleaseDeploymentRepository}</altReleaseDeploymentRepository>
+                        <altSnapshotDeploymentRepository>${maven-deploy-plugin.altSnapshotDeploymentRepository}</altSnapshotDeploymentRepository>
+                    </configuration>
+                </plugin>
+
+                <!-- maven-failsafe-plugin (configuration only, no default phase/goal) -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${maven-failsafe-plugin.version}</version>
+                </plugin>
+
+                <!-- jgitflow-maven-plugin (configuration only, no default phase/goal)-->
+                <plugin>
+                    <groupId>ch.dvbern.oss.maven.jgitflow</groupId>
+                    <artifactId>jgitflow-maven-plugin</artifactId>
+                    <version>${jgitflow-maven-plugin.version}</version>
+                    <configuration>
+                        <!-- immer auf den aktuellen Branches bauen -->
+                        <pullDevelop>true</pullDevelop>
+                        <pullMaster>true</pullMaster>
+
+                        <!-- Multi-Modul-Projekte: Versionsnummern in alle Module uebernehmen -->
+                        <autoVersionSubmodules>true</autoVersionSubmodules>
+
+                        <!-- Snapshots sind bei den *-start goals noch erlaubt (z.B. fuer Submodule!),
+                        bei den *-finish nicht mehr, siehe unten -->
+                        <allowSnapshots>true</allowSnapshots>
+                        <allowUntracked>true</allowUntracked>
+
+                        <!-- Build/Deploy wird von CI Server gemacht, nach dem finish werden alle notwendigen Branches/Tags gepusht -->
+                        <noReleaseBuild>true</noReleaseBuild>
+                        <noHotfixBuild>true</noHotfixBuild>
+                        <noFeatureBuild>true</noFeatureBuild>
+                        <pushReleases>true</pushReleases>
+                        <pushHotfixes>true</pushHotfixes>
+                        <pushFeatures>true</pushFeatures>
+
+                        <!-- Diese goals werden bei release-finish ausgefuehrt. (z.B. Enforcer haengt per Default an verify) -->
+                        <goals>clean verify</goals>
+
+                        <!-- Fast Forward merges verhindern, gibt schoenere Merge-Trees -->
+                        <suppressFastForward>true</suppressFastForward>
+                        <!-- Force lf line-endings in pom.xml -->
+                        <eol>lf</eol>
+                        <!-- Nutzt das SSH-Keystore-Passwort vom OS -->
+                        <enableSshAgent>true</enableSshAgent>
+
+                        <flowInitContext>
+                            <masterBranchName>master</masterBranchName>
+                            <developBranchName>develop</developBranchName>
+                            <featureBranchPrefix>feature/</featureBranchPrefix>
+                            <releaseBranchPrefix>release/</releaseBranchPrefix>
+                            <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
+                            <versionTagPrefix />
+                        </flowInitContext>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <!-- Use secure crypto algorithms: https://ecosystem.atlassian.net/browse/MJF-299 -->
+                            <groupId>com.jcraft</groupId>
+                            <artifactId>jsch</artifactId>
+                            <version>0.1.55</version>
+                        </dependency>
+                    </dependencies>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>release-finish</goal>
+                                <goal>hotfix-finish</goal>
+                            </goals>
+                            <configuration>
+                                <allowSnapshots>false</allowSnapshots>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <!-- this is only exists since it is included by default and thus enforcer becomes picky -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.7.1</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>${spotbugs-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>spotbugs</id>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>ch.dvbern.oss.maven</groupId>
+                            <artifactId>code-conventions</artifactId>
+                            <version>${code-conventions.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <skip>${skip-code-validation}</skip>
+                        <!--
+                        Enables analysis which takes more memory but finds more bugs.
+                        If you run out of memory, changes the value of the effort element
+                        to 'Low'.
+                        -->
+                        <effort>Max</effort>
+                        <!-- Reports all bugs (other values are medium and max) -->
+                        <threshold>Low</threshold>
+                        <!-- Produces XML report -->
+                        <xmlOutput>true</xmlOutput>
+                        <!-- Configures the directory in which the XML report is created -->
+                        <spotbugsXmlOutputDirectory>${project.build.directory}/spotbugs</spotbugsXmlOutputDirectory>
+                        <failOnError>true</failOnError>
+                        <includeFilterFile>rules/spotbugs/spotbugs-includes.xml</includeFilterFile>
+                        <excludeFilterFile>rules/spotbugs/spotbugs-excludes.xml</excludeFilterFile>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>${maven-pmd-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>pmd</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>ch.dvbern.oss.maven</groupId>
+                            <artifactId>code-conventions</artifactId>
+                            <version>${code-conventions.version}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <skip>${skip-code-validation}</skip>
+                        <failOnViolation>true</failOnViolation>
+                        <rulesets>
+                            <ruleset>rules/pmd/pmd-rules.xml</ruleset>
+                        </rulesets>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-checkstyle-plugin</artifactId>
+                    <version>${maven-checkstyle-plugin.version}</version>
+                    <configuration>
+                        <skip>${skip-code-validation}</skip>
+                        <configLocation>rules/checkstyle/checkstyle-rules.xml</configLocation>
+                        <suppressionsLocation>rules/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
+                        <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
+                        <encoding>UTF-8</encoding>
+                        <consoleOutput>true</consoleOutput>
+                        <failsOnError>true</failsOnError>
+                        <violationSeverity>info</violationSeverity>
+                        <failOnViolation>true</failOnViolation>
+                        <excludes>**/target/**/*</excludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>checkstyle-check</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.puppycrawl.tools</groupId>
+                            <artifactId>checkstyle</artifactId>
+                            <version>${maven-checkstyle.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>ch.dvbern.oss.maven</groupId>
+                            <artifactId>code-conventions</artifactId>
+                            <version>${code-conventions.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- maven-enforcer-plugin -->
+            <!-- explicitly activated here so projects don't forget to include this -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+
+            <!-- maven-source-plugin -->
+            <!-- explicitly activated here so projects don't forget to include this -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <!-- properties set by jenkins -->
+        <repository>
+            <id>dvb.oss</id>
+            <name>DV Bern Release Repository</name>
+            <url>${maven.repo.releases.oss.url}</url>
+        </repository>
+        <snapshotRepository>
+            <id>dvb.oss.snapshots</id>
+            <name>DV Bern Snapshots Repository</name>
+            <layout>default</layout>
+            <url>${maven.repo.snapshots.oss.url}</url>
+            <uniqueVersion>true</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
+</project>
