@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ch.dvbern.oss.maven</groupId>
     <artifactId>parent-minimal</artifactId>
     <packaging>pom</packaging>
     <name>Minimal Maven OSS Parent POM of DV Bern AG</name>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <description>Maven Einstellung, die allgemeine Gueltigkeit fuer die Open-Source-Projekte der DV Bern AG haben</description>
 
@@ -71,9 +69,9 @@
 
         <!-- maven-deploy-plugin -->
         <maven-deploy-plugin.deployAtEnd>true</maven-deploy-plugin.deployAtEnd>
-        <maven-deploy-plugin.altDeploymentRepository/>
-        <maven-deploy-plugin.altReleaseDeploymentRepository/>
-        <maven-deploy-plugin.altSnapshotDeploymentRepository/>
+        <maven-deploy-plugin.altDeploymentRepository />
+        <maven-deploy-plugin.altReleaseDeploymentRepository />
+        <maven-deploy-plugin.altSnapshotDeploymentRepository />
 
         <!-- maven-enforcer-plugin -->
         <maven-enforcer-plugin.requireMavenVersion.version>3.6.3</maven-enforcer-plugin.requireMavenVersion.version>
@@ -83,8 +81,8 @@
         <maven-enforcer-plugin.requireReleaseDeps.failWhenParentIsSnapshot>true</maven-enforcer-plugin.requireReleaseDeps.failWhenParentIsSnapshot>
         <maven-enforcer-plugin.requireReleaseDeps.searchTransitive>true</maven-enforcer-plugin.requireReleaseDeps.searchTransitive>
         <maven-enforcer-plugin.requireReleaseDeps.phases>clean,deploy,site</maven-enforcer-plugin.requireReleaseDeps.phases>
-        <maven-enforcer-plugin.requirePluginVersions.unCheckedPlugins/>
-        <maven-enforcer-plugin.requirePluginVersions.additionalPlugins/>
+        <maven-enforcer-plugin.requirePluginVersions.unCheckedPlugins />
+        <maven-enforcer-plugin.requirePluginVersions.additionalPlugins />
 
         <!-- ******** internal configuration ******** -->
         <!-- used by the development-mode profile: enable projects to skip custom stuff in development-mode -->
@@ -93,7 +91,7 @@
         <!-- Jenkins -->
         <maven.repo.releases.oss.url>releases-url-set-by-jenkins</maven.repo.releases.oss.url>
         <maven.repo.snapshots.oss.url>snapshots-url-set-by-jenkins</maven.repo.snapshots.oss.url>
-        <dvb.git.serverId/>
+        <dvb.git.serverId />
     </properties>
 
     <build>
@@ -280,7 +278,7 @@
                             <featureBranchPrefix>feature/</featureBranchPrefix>
                             <releaseBranchPrefix>release/</releaseBranchPrefix>
                             <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
-                            <versionTagPrefix/>
+                            <versionTagPrefix />
                         </flowInitContext>
                     </configuration>
                     <dependencies>
