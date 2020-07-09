@@ -6,7 +6,7 @@
     <artifactId>parent-minimal</artifactId>
     <packaging>pom</packaging>
     <name>Minimal Maven OSS Parent POM of DV Bern AG</name>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <description>Maven Einstellung, die allgemeine Gueltigkeit fuer die Open-Source-Projekte der DV Bern AG haben</description>
 
