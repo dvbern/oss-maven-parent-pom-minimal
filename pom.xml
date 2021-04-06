@@ -132,7 +132,7 @@
         <maven-deploy-plugin.altSnapshotDeploymentRepository />
 
         <!-- maven-enforcer-plugin -->
-        <maven-enforcer-plugin.requireMavenVersion.version>3.6.3</maven-enforcer-plugin.requireMavenVersion.version>
+        <maven-enforcer-plugin.requireMavenVersion.version>3.8.1</maven-enforcer-plugin.requireMavenVersion.version>
         <maven-enforcer-plugin.requireJavaVersion.version>${maven-compiler-plugin.javaversion}</maven-enforcer-plugin.requireJavaVersion.version>
         <maven-enforcer-plugin.skip>false</maven-enforcer-plugin.skip>
         <maven-enforcer-plugin.requireReleaseDeps.onlyWhenRelease>true</maven-enforcer-plugin.requireReleaseDeps.onlyWhenRelease>
