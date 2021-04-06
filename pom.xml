@@ -4,16 +4,29 @@
 
     <groupId>ch.dvbern.oss.maven</groupId>
     <artifactId>parent-minimal</artifactId>
+    <version>2.0.0</version>
     <packaging>pom</packaging>
-    <name>Minimal Maven OSS Parent POM of DV Bern AG</name>
-    <version>1.0.0</version>
 
+    <name>Minimal Maven OSS Parent POM of DV Bern AG</name>
     <description>Maven Einstellung, die allgemeine Gueltigkeit fuer die Open-Source-Projekte der DV Bern AG haben</description>
+    <url>https://github.com/dvbern/oss-maven-parent-pom-minimal</url>
 
     <organization>
         <name>DV Bern AG</name>
         <url>https://www.dvbern.ch/</url>
     </organization>
+
+    <developers>
+        <developer>
+            <name>Christoph Linder</name>
+            <email>christoph.linder@dvbern.ch</email>
+            <organization>DV Bern AG</organization>
+            <roles>
+                <role>Developer</role>
+                <role>Architect</role>
+            </roles>
+        </developer>
+    </developers>
 
     <licenses>
         <license>
@@ -23,21 +36,66 @@
         </license>
     </licenses>
 
+    <scm>
+        <url>https://github.com/dvbern/oss-maven-parent-pom-minimal.git</url>
+        <connection>scm:git:https://github.com/dvbern/oss-maven-parent-pom-minimal.git</connection>
+        <developerConnection>scm:git:https://github.com/dvbern/oss-maven-parent-pom-minimal.git</developerConnection>
+    </scm>
+
     <profiles>
         <profile>
             <id>development-mode</id>
-            <activation>
-                <property>
-                    <name>skipTests</name>
-                    <value>true</value>
-                </property>
-            </activation>
             <properties>
                 <skipTests>true</skipTests>
                 <skipITs>true</skipITs>
                 <!-- add a custom property for simpler integration into projects -->
                 <skip-code-validation>true</skip-code-validation>
+                <skip-javadoc>true</skip-javadoc>
             </properties>
+        </profile>
+        <profile>
+            <id>maven-central</id>
+            <properties>
+                <skip-javadoc />
+            </properties>
+            <build>
+                <plugins>
+
+                    <!-- maven-gpg-plugin -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven-gpg-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
+                    <!-- nexus-staging-maven-plugin -->
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                        <version>${nexus-staging-maven-plugin.version}</version>
+                        <extensions>true</extensions>
+                        <configuration>
+                            <serverId>ossrh</serverId>
+                            <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                            <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>deploy</id>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
 
@@ -51,8 +109,8 @@
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
         <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
@@ -60,12 +118,12 @@
 
         <!-- plugin versions for optional plugins -->
         <maven-failsafe-plugin.version>${maven-surefire-plugin.version}</maven-failsafe-plugin.version>
-        <jgitflow-maven-plugin.version>1.0-m6</jgitflow-maven-plugin.version>
-        <spotbugs-maven-plugin.version>4.0.4</spotbugs-maven-plugin.version>
-        <maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
-        <maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
-        <maven-checkstyle.version>8.34</maven-checkstyle.version>
-        <code-conventions.version>2.0.0</code-conventions.version>
+        <jgitflow-maven-plugin.version>1.0-m8</jgitflow-maven-plugin.version>
+        <spotbugs-maven-plugin.version>4.2.2</spotbugs-maven-plugin.version>
+        <maven-pmd-plugin.version>3.14.0</maven-pmd-plugin.version>
+        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
+        <maven-checkstyle.version>8.40</maven-checkstyle.version>
+        <code-conventions.version>3.0.5</code-conventions.version>
 
         <!-- maven-deploy-plugin -->
         <maven-deploy-plugin.deployAtEnd>true</maven-deploy-plugin.deployAtEnd>
@@ -74,7 +132,7 @@
         <maven-deploy-plugin.altSnapshotDeploymentRepository />
 
         <!-- maven-enforcer-plugin -->
-        <maven-enforcer-plugin.requireMavenVersion.version>3.6.3</maven-enforcer-plugin.requireMavenVersion.version>
+        <maven-enforcer-plugin.requireMavenVersion.version>3.8.1</maven-enforcer-plugin.requireMavenVersion.version>
         <maven-enforcer-plugin.requireJavaVersion.version>${maven-compiler-plugin.javaversion}</maven-enforcer-plugin.requireJavaVersion.version>
         <maven-enforcer-plugin.skip>false</maven-enforcer-plugin.skip>
         <maven-enforcer-plugin.requireReleaseDeps.onlyWhenRelease>true</maven-enforcer-plugin.requireReleaseDeps.onlyWhenRelease>
