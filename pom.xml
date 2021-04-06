@@ -117,6 +117,8 @@
         <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
 
         <!-- plugin versions for optional plugins -->
+        <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
+        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <maven-failsafe-plugin.version>${maven-surefire-plugin.version}</maven-failsafe-plugin.version>
         <jgitflow-maven-plugin.version>1.0-m8</jgitflow-maven-plugin.version>
         <spotbugs-maven-plugin.version>4.2.2</spotbugs-maven-plugin.version>
