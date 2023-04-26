@@ -9,7 +9,7 @@ properties([
 	])
 ])
 
-def jdk = "OpenJDK_14.0.1"
+def jdk = "Temurin_jdk-17.0.1+12"
 // comma separated list of email addresses of all team members (for notification)
 def recipients = "fabio.heer@dvbern.ch, linder.christoph@dvbern.ch"
 
@@ -38,7 +38,7 @@ if (params.performRelease) {
 			step([
 				$class                  : 'Mailer',
 				notifyEveryUnstableBuild: true,
-				recipients              : emailextrecipients([[$class: 'RequesterRecipientProvider']]),
+				recipients              : emailextrecipients([[$class: 'DevelopersRecipientProvider']]),
 				sendToIndividuals       : true])
 
 		} else {

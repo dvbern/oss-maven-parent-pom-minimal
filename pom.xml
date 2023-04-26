@@ -4,7 +4,7 @@
 
     <groupId>ch.dvbern.oss.maven</groupId>
     <artifactId>parent-minimal</artifactId>
-    <version>2.0.2</version>
+    <version>3.0.0</version>
     <packaging>pom</packaging>
 
     <name>Minimal Maven OSS Parent POM of DV Bern AG</name>
@@ -100,33 +100,33 @@
     </profiles>
 
     <properties>
-        <maven-compiler-plugin.javaversion>11</maven-compiler-plugin.javaversion>
+        <maven-compiler-plugin.javaversion>17</maven-compiler-plugin.javaversion>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- plugin versions for default lifecycle -->
-        <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
-        <maven-enforcer-plugin.version>3.0.0-M3</maven-enforcer-plugin.version>
-        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
-        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
-        <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
+        <maven-clean-plugin.version>3.2.0</maven-clean-plugin.version>
+        <maven-enforcer-plugin.version>3.2.1</maven-enforcer-plugin.version>
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
+        <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
         <maven-source-plugin.version>3.2.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.2.0</maven-javadoc-plugin.version>
-        <maven-install-plugin.version>3.0.0-M1</maven-install-plugin.version>
-        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
+        <maven-install-plugin.version>3.1.0</maven-install-plugin.version>
+        <maven-deploy-plugin.version>3.1.0</maven-deploy-plugin.version>
 
         <!-- plugin versions for optional plugins -->
-        <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
-        <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
+        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
+        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-failsafe-plugin.version>${maven-surefire-plugin.version}</maven-failsafe-plugin.version>
-        <jgitflow-maven-plugin.version>1.0-m8</jgitflow-maven-plugin.version>
-        <spotbugs-maven-plugin.version>4.2.2</spotbugs-maven-plugin.version>
-        <maven-pmd-plugin.version>3.14.0</maven-pmd-plugin.version>
-        <maven-checkstyle-plugin.version>3.1.2</maven-checkstyle-plugin.version>
-        <maven-checkstyle.version>8.40</maven-checkstyle.version>
-        <code-conventions.version>3.0.5</code-conventions.version>
+        <jgitflow-maven-plugin.version>1.0-m9</jgitflow-maven-plugin.version>
+        <spotbugs-maven-plugin.version>4.7.3.4</spotbugs-maven-plugin.version>
+        <maven-pmd-plugin.version>3.20.0</maven-pmd-plugin.version>
+        <maven-checkstyle-plugin.version>3.2.1</maven-checkstyle-plugin.version>
+        <maven-checkstyle.version>10.7.0</maven-checkstyle.version>
+        <code-conventions.version>5.0.0</code-conventions.version>
 
         <!-- maven-deploy-plugin -->
         <maven-deploy-plugin.deployAtEnd>true</maven-deploy-plugin.deployAtEnd>
@@ -135,7 +135,7 @@
         <maven-deploy-plugin.altSnapshotDeploymentRepository />
 
         <!-- maven-enforcer-plugin -->
-        <maven-enforcer-plugin.requireMavenVersion.version>3.8.1</maven-enforcer-plugin.requireMavenVersion.version>
+        <maven-enforcer-plugin.requireMavenVersion.version>3.9.1</maven-enforcer-plugin.requireMavenVersion.version>
         <maven-enforcer-plugin.requireJavaVersion.version>${maven-compiler-plugin.javaversion}</maven-enforcer-plugin.requireJavaVersion.version>
         <maven-enforcer-plugin.skip>false</maven-enforcer-plugin.skip>
         <maven-enforcer-plugin.requireReleaseDeps.onlyWhenRelease>true</maven-enforcer-plugin.requireReleaseDeps.onlyWhenRelease>
@@ -386,7 +386,7 @@
                     <!-- this is only exists since it is included by default and thus enforcer becomes picky -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.7.1</version>
+                    <version>4.0.0-M7</version>
                 </plugin>
 
                 <plugin>
@@ -465,7 +465,6 @@
                         <configLocation>rules/checkstyle/checkstyle-rules.xml</configLocation>
                         <suppressionsLocation>rules/checkstyle/checkstyle-suppressions.xml</suppressionsLocation>
                         <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
-                        <encoding>UTF-8</encoding>
                         <consoleOutput>true</consoleOutput>
                         <failsOnError>true</failsOnError>
                         <violationSeverity>info</violationSeverity>
