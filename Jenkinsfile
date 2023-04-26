@@ -38,7 +38,7 @@ if (params.performRelease) {
 			step([
 				$class                  : 'Mailer',
 				notifyEveryUnstableBuild: true,
-				recipients              : emailextrecipients([[$class: 'RequesterRecipientProvider']]),
+				recipients              : emailextrecipients([[$class: 'DevelopersRecipientProvider']]),
 				sendToIndividuals       : true])
 
 		} else {
