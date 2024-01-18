@@ -61,35 +61,41 @@ if (params.performRelease) {
 			currentBuild.displayName = "${branch}-${dvbMaven.pomVersion()}-${env.BUILD_NUMBER}"
 
 			stage('Maven build') {
-				// in develop and master branches attempt to deploy the artifacts, otherwise only run to the verify
-				// phase.
-				def branchSpecificGoal = {
-					if (branch.startsWith(developBranchName) || branch.startsWith(masterBranchName)) {
-						return "install"
+				script {
+					// in develop and master branches attempt to deploy the artifacts, otherwise only run to the verify
+					// phase.
+					def branchSpecificGoal = {
+						if (branch.startsWith(developBranchName) || branch.startsWith(masterBranchName)) {
+							return "install"
+						}
+	
+						return "verify"
 					}
-
-					return "verify"
-				}
-
-				withMaven(jdk: jdk) {
-					dvbUtil.genericSh('./mvnw -B -U clean ' + branchSpecificGoal())
-				}
-				if (currentBuild.result == "UNSTABLE") {
-					handleFailures("build is unstable")
+	
+					withMaven(jdk: jdk) {
+						dvbUtil.genericSh('./mvnw -B -U clean ' + branchSpecificGoal())
+					}
+					if (currentBuild.result == "UNSTABLE") {
+						handleFailures("build is unstable")
+					}
 				}
 			}
 
 			if (branch.startsWith(developBranchName) || branch.startsWith(masterBranchName)) {
 				stage('Deploy DV Nexus') {
-					withMaven(jdk: jdk) {
-						dvbUtil.genericSh('./mvnw -Pdvbern.oss -Pdevelopment-mode deploy')
+					script {
+						withMaven(jdk: jdk) {
+							dvbUtil.genericSh('./mvnw -Pdvbern.oss -Pdevelopment-mode deploy')
+						}
 					}
 				}
 
 				if (branch.startsWith(masterBranchName)) {
 					stage('Deploy Maven Central') {
-						withMaven(jdk: jdk) {
-							dvbUtil.genericSh('./mvnw -Pmaven-central -Pdevelopment-mode deploy')
+						script {
+							withMaven(jdk: jdk) {
+								dvbUtil.genericSh('./mvnw -Pmaven-central -Pdevelopment-mode deploy')
+							}
 						}
 					}
 				}
