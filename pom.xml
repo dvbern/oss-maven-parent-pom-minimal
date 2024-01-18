@@ -4,7 +4,7 @@
 
     <groupId>ch.dvbern.oss.maven</groupId>
     <artifactId>parent-minimal</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Minimal Maven OSS Parent POM of DV Bern AG</name>
@@ -122,6 +122,12 @@
         <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
         <maven-failsafe-plugin.version>${maven-surefire-plugin.version}</maven-failsafe-plugin.version>
         <jgitflow-maven-plugin.version>1.0-m9</jgitflow-maven-plugin.version>
+        <jgitflow-maven-plugin.flowInitContext.masterBranchName>main</jgitflow-maven-plugin.flowInitContext.masterBranchName>
+        <jgitflow-maven-plugin.flowInitContext.developBranchName/>deveop></jgitflow-maven-plugin.flowInitContext.developBranchName/>
+        <jgitflow-maven-plugin.flowInitContext.featureBranchPrefix>feature/</jgitflow-maven-plugin.flowInitContext.featureBranchPrefix>
+        <jgitflow-maven-plugin.flowInitContext.releaseBranchPrefix>release/</jgitflow-maven-plugin.flowInitContext.releaseBranchPrefix>
+        <jgitflow-maven-plugin.flowInitContext.hotfixBranchPrefix>hotfix/</jgitflow-maven-plugin.flowInitContext.hotfixBranchPrefix>
+        <jgitflow-maven-plugin.flowInitContext.versionTagPrefix>v</jgitflow-maven-plugin.flowInitContext.versionTagPrefix>
         <spotbugs-maven-plugin.version>4.7.3.4</spotbugs-maven-plugin.version>
         <maven-pmd-plugin.version>3.20.0</maven-pmd-plugin.version>
         <maven-checkstyle-plugin.version>3.2.1</maven-checkstyle-plugin.version>
@@ -353,12 +359,12 @@
                         <enableSshAgent>true</enableSshAgent>
 
                         <flowInitContext>
-                            <masterBranchName>master</masterBranchName>
-                            <developBranchName>develop</developBranchName>
-                            <featureBranchPrefix>feature/</featureBranchPrefix>
-                            <releaseBranchPrefix>release/</releaseBranchPrefix>
-                            <hotfixBranchPrefix>hotfix/</hotfixBranchPrefix>
-                            <versionTagPrefix />
+                            <masterBranchName>${jgitflow-maven-plugin.flowInitContext.masterBranchName}</masterBranchName>
+                            <developBranchName>${jgitflow-maven-plugin.flowInitContext.developBranchName}</developBranchName>
+                            <featureBranchPrefix>${jgitflow-maven-plugin.flowInitContext.featureBranchPrefix}/</featureBranchPrefix>
+                            <releaseBranchPrefix>${jgitflow-maven-plugin.flowInitContext.releaseBranchPrefix}/</releaseBranchPrefix>
+                            <hotfixBranchPrefix>${jgitflow-maven-plugin.flowInitContext.hotfixBranchPrefix}/</hotfixBranchPrefix>
+                            <versionTagPrefix>${jgitflow-maven-plugin.flowInitContext.masterBranchName}</versionTagPrefix>
                         </flowInitContext>
                     </configuration>
                     <dependencies>
