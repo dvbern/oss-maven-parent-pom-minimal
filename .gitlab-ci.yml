@@ -17,6 +17,6 @@ include:
   - component: "gitlab.dvbern.ch/components/build/maven@1.5.0"
     inputs:
       name: build
-      java-image-version: 17
+      java-image-version: "17"
       maven-goal: "verify -Pmaven-central"
       build-on: "default"
