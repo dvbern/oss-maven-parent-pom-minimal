@@ -123,7 +123,7 @@
         <maven-failsafe-plugin.version>${maven-surefire-plugin.version}</maven-failsafe-plugin.version>
         <jgitflow-maven-plugin.version>1.0-m9</jgitflow-maven-plugin.version>
         <jgitflow-maven-plugin.flowInitContext.masterBranchName>main</jgitflow-maven-plugin.flowInitContext.masterBranchName>
-        <jgitflow-maven-plugin.flowInitContext.developBranchName/>deveop></jgitflow-maven-plugin.flowInitContext.developBranchName/>
+        <jgitflow-maven-plugin.flowInitContext.developBranchName>develop></jgitflow-maven-plugin.flowInitContext.developBranchName>
         <jgitflow-maven-plugin.flowInitContext.featureBranchPrefix>feature/</jgitflow-maven-plugin.flowInitContext.featureBranchPrefix>
         <jgitflow-maven-plugin.flowInitContext.releaseBranchPrefix>release/</jgitflow-maven-plugin.flowInitContext.releaseBranchPrefix>
         <jgitflow-maven-plugin.flowInitContext.hotfixBranchPrefix>hotfix/</jgitflow-maven-plugin.flowInitContext.hotfixBranchPrefix>

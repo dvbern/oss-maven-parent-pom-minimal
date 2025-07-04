@@ -7,7 +7,7 @@ of the ["clean" and "default" lifecycle](https://maven.apache.org/guides/introdu
 used by "pom" and "jar" packaging.
 
 
-In addition (and to comply to company standards), the following additional configuration is made:
+In addition, (and to comply to company standards), the following additional configuration is made:
 * Configure deployment to DVB Nexus
 * Configure jgitflow
 * Configure static code analysis (spotbugs, pmd, checkstyle plugins)
