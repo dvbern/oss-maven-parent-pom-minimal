@@ -1,0 +1,22 @@
+stages: [release, build]
+
+include:
+  - component: "gitlab.dvbern.ch/components/setup/workflow@1.5.0"
+    inputs:
+      on-branch: always
+      branch-exclude: feature\/.* # only build feature branches on MR
+  - component: "gitlab.dvbern.ch/components/setup/extract-version@1.5.0"
+    inputs:
+      version-query: ".project.version"
+      version-file: "pom.xml"
+      extract-command: xq
+  - component: "gitlab.dvbern.ch/components/release/gitflow@1.5.0"
+    inputs:
+      name: release
+      java-version: "17"
+  - component: "gitlab.dvbern.ch/components/build/maven@1.5.0"
+    inputs:
+      name: build
+      java-image-version: 17
+      maven-goal: "verify -Pmaven-central"
+      build-on: "default"

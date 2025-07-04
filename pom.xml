@@ -66,15 +66,11 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
                         <version>${maven-gpg-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
+                        <configuration>
+                            <signer>bc</signer>
+                            <keyEnvName>MAVEN_GPG_PRIVATE_KEY</keyEnvName>
+                            <passphraseEnvName>MAVEN_GPG_PASSPHRASE</passphraseEnvName>
+                        </configuration>
                     </plugin>
 
                     <!-- nexus-staging-maven-plugin -->
@@ -118,8 +114,8 @@
         <maven-deploy-plugin.version>3.1.0</maven-deploy-plugin.version>
 
         <!-- plugin versions for optional plugins -->
-        <nexus-staging-maven-plugin.version>1.6.13</nexus-staging-maven-plugin.version>
-        <maven-gpg-plugin.version>3.0.1</maven-gpg-plugin.version>
+        <nexus-staging-maven-plugin.version>1.7.0</nexus-staging-maven-plugin.version>
+        <maven-gpg-plugin.version>3.2.7</maven-gpg-plugin.version>
         <maven-failsafe-plugin.version>${maven-surefire-plugin.version}</maven-failsafe-plugin.version>
         <jgitflow-maven-plugin.version>1.0-m9</jgitflow-maven-plugin.version>
         <jgitflow-maven-plugin.flowInitContext.masterBranchName>main</jgitflow-maven-plugin.flowInitContext.masterBranchName>
@@ -530,18 +526,9 @@
     </build>
 
     <distributionManagement>
-        <!-- properties set by jenkins -->
-        <repository>
-            <id>dvb.oss</id>
-            <name>DV Bern Release Repository</name>
-            <url>${maven.repo.releases.oss.url}</url>
-        </repository>
         <snapshotRepository>
-            <id>dvb.oss.snapshots</id>
-            <name>DV Bern Snapshots Repository</name>
-            <layout>default</layout>
-            <url>${maven.repo.snapshots.oss.url}</url>
-            <uniqueVersion>true</uniqueVersion>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
