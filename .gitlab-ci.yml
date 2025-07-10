@@ -1,22 +1,78 @@
-stages: [release, build]
+stages:
+  - build
+  - release
+  - deploy
+  - publish
+
+variables:
+  MAVEN_CLI_OPTS: "-B -U"
+  MAVEN_CLI_PROFILES: ""
+  MAVEN_CLI_GOAL: ""
 
 include:
   - component: "gitlab.dvbern.ch/components/setup/workflow@1.5.0"
     inputs:
-      on-branch: always
+      on-default-branch: always
+      on-tag: always
       branch-exclude: feature\/.* # only build feature branches on MR
+
   - component: "gitlab.dvbern.ch/components/setup/extract-version@1.5.0"
     inputs:
       version-query: ".project.version"
       version-file: "pom.xml"
       extract-command: xq
+
+  - component: "gitlab.dvbern.ch/components/build/maven@1.8.0"
+    inputs:
+      stage: build
+      name: '.build-base'
+      java-image-version: 8-jdk-alpine
+      maven-goal: $MAVEN_CLI_OPTS -Pcoverage install
+
+  - component: "gitlab.dvbern.ch/components/build/maven@1.8.0"
+    inputs:
+      stage: deploy
+      name: '.deploy-base'
+      java-image-version: 8-jdk-alpine
+      maven-goal: $MAVEN_CLI_OPTS $MAVEN_CLI_PROFILES -Pdevelopment-mode deploy
+
   - component: "gitlab.dvbern.ch/components/release/gitflow@1.5.0"
     inputs:
       name: release
+      stage: release
       java-version: "17"
-  - component: "gitlab.dvbern.ch/components/build/maven@1.5.0"
+
+  - component: "gitlab.dvbern.ch/components/publish/git-mirror@feature/extend-publish-component-to-exclude-input"
     inputs:
-      name: build
-      java-image-version: "17"
-      maven-goal: "deploy -Pmaven-central"
-      build-on: "default"
+      stage: publish
+      git-mirror-target-repo-url: github.com/dvbern/oss-maven-parent-pom-minimal.git
+      git-mirror-token-name: token
+      git-mirror-token: $GITHUB_TOKEN
+      git-mirror-user-name: "DV Bern Mirror Bot"
+      git-mirror-user-email: "publish-bot@dvbern.ch"
+      mirror-on: tag
+      mirror-when: on_success
+      exclude-paths:
+        - ".gitlab-ci.yml"
+        - "Jenkinsfile"
+        - ".m2/**"
+        - "gitlab-ci/**"
+
+mvn-install:
+  extends: .build-base
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+
+deploy-dv-nexus:
+  extends: .deploy-base
+  variables:
+    MAVEN_CLI_PROFILES: "-Pdvbern.oss"
+  rules:
+    - if: '$CI_COMMIT_TAG'
+
+deploy-maven-central:
+  extends: .deploy-base
+  variables:
+    MAVEN_CLI_PROFILES: "-Pmaven-central"
+  rules:
+    - if: '$CI_COMMIT_TAG'
