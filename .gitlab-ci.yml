@@ -27,7 +27,7 @@ include:
       stage: build
       name: '.build-base'
       java-image-version: 8-jdk-alpine
-      maven-goal: $MAVEN_CLI_OPTS -Pcoverage install
+      maven-goal: $MAVEN_CLI_OPTS install
 
   - component: "gitlab.dvbern.ch/components/build/maven@1.8.0"
     inputs:
