@@ -26,14 +26,14 @@ include:
     inputs:
       stage: build
       name: '.build-base'
-      java-image-version: 17
+      java-image-version: '17'
       maven-goal: $MAVEN_CLI_OPTS install
 
   - component: "gitlab.dvbern.ch/components/build/maven@1.8.0"
     inputs:
       stage: deploy
       name: '.deploy-base'
-      java-image-version: 17
+      java-image-version: '17'
       maven-goal: $MAVEN_CLI_OPTS $MAVEN_CLI_PROFILES -Pdevelopment-mode deploy
 
   - component: "gitlab.dvbern.ch/components/release/gitflow@1.5.0"
