@@ -51,43 +51,37 @@
 
         <!-- plugin versions for default lifecycle -->
         <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
-        <maven-enforcer-plugin.version>3.6.0</maven-enforcer-plugin.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.5.3</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>${maven-surefire-plugin.version}</maven-failsafe-plugin.version>
         <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
-        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
-        <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
         <maven-install-plugin.version>3.1.4</maven-install-plugin.version>
         <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
+
+        <!-- other plugin versions -->
+        <central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
+        <jgitflow-maven-plugin.version>1.0-m10</jgitflow-maven-plugin.version>
+        <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
+        <maven-enforcer-plugin.version>3.6.0</maven-enforcer-plugin.version>
+        <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
+        <maven-javadoc-plugin.version>3.11.2</maven-javadoc-plugin.version>
+        <maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
+        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+        <spotbugs-maven-plugin.version>4.9.3.2</spotbugs-maven-plugin.version>
+
+        <!-- plugin versions for site lifecycle -->
         <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
 
-        <!-- plugin versions for optional plugins -->
-        <central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
-        <maven-gpg-plugin.version>3.2.8</maven-gpg-plugin.version>
-        <maven-failsafe-plugin.version>${maven-surefire-plugin.version}</maven-failsafe-plugin.version>
-        <jgitflow-maven-plugin.version>1.0-m10</jgitflow-maven-plugin.version>
+        <!-- jgitflow config -->
         <jgitflow-maven-plugin.flowInitContext.masterBranchName>main</jgitflow-maven-plugin.flowInitContext.masterBranchName>
         <jgitflow-maven-plugin.flowInitContext.developBranchName>develop</jgitflow-maven-plugin.flowInitContext.developBranchName>
         <jgitflow-maven-plugin.flowInitContext.featureBranchPrefix>feature/</jgitflow-maven-plugin.flowInitContext.featureBranchPrefix>
         <jgitflow-maven-plugin.flowInitContext.releaseBranchPrefix>release/</jgitflow-maven-plugin.flowInitContext.releaseBranchPrefix>
         <jgitflow-maven-plugin.flowInitContext.hotfixBranchPrefix>hotfix/</jgitflow-maven-plugin.flowInitContext.hotfixBranchPrefix>
         <jgitflow-maven-plugin.flowInitContext.versionTagPrefix>v</jgitflow-maven-plugin.flowInitContext.versionTagPrefix>
-        <spotbugs-maven-plugin.version>4.9.3.2</spotbugs-maven-plugin.version>
-        <maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
-        <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
-        <maven-checkstyle.version>10.12.7</maven-checkstyle.version>
-        <code-conventions.version>5.0.0</code-conventions.version>
 
-        <!-- maven-deploy-plugin -->
-        <!-- do not deploy by default. OSS projects are published to maven central -->
-        <maven-deploy-plugin.skip>true</maven-deploy-plugin.skip>
-        <maven-deploy-plugin.deployAtEnd>true</maven-deploy-plugin.deployAtEnd>
-        <maven-deploy-plugin.altDeploymentRepository/>
-        <maven-deploy-plugin.altReleaseDeploymentRepository/>
-        <maven-deploy-plugin.altSnapshotDeploymentRepository/>
-
-        <!-- maven-enforcer-plugin -->
+        <!-- enforcer config -->
         <maven-enforcer-plugin.requireMavenVersion.version>3.9.8</maven-enforcer-plugin.requireMavenVersion.version>
         <maven-enforcer-plugin.requireJavaVersion.version>${maven-compiler-plugin.javaversion}</maven-enforcer-plugin.requireJavaVersion.version>
         <maven-enforcer-plugin.skip>false</maven-enforcer-plugin.skip>
@@ -98,13 +92,16 @@
         <maven-enforcer-plugin.requirePluginVersions.unCheckedPlugins/>
         <maven-enforcer-plugin.requirePluginVersions.additionalPlugins/>
 
-        <!-- maven-gpg-plugin -->
+        <!-- plugin configurations -->
+        <maven-checkstyle.version>10.12.7</maven-checkstyle.version>
+        <code-conventions.version>5.0.0</code-conventions.version>
+        <!-- do not deploy by default. OSS projects are published to maven central -->
+        <maven-deploy-plugin.skip>true</maven-deploy-plugin.skip>
         <!-- Environment variable containing the private key -->
         <maven-gpg-plugin.keyEnvName>MAVEN_GPG_PRIVATE_KEY</maven-gpg-plugin.keyEnvName>
         <!-- Environment variable containing the password for the private key -->
         <maven-gpg-plugin.passphraseEnvName>MAVEN_GPG_PASSPHRASE</maven-gpg-plugin.passphraseEnvName>
-
-        <!-- Take credentials of this server from server.xml -->
+        <!-- Credentials must be set in the servers section in settings.xml -->
         <central-publishing-maven-plugin.publishingServerId>central</central-publishing-maven-plugin.publishingServerId>
 
         <!-- ******** internal configuration ******** -->
