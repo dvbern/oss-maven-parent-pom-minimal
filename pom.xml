@@ -10,8 +10,10 @@
     <packaging>pom</packaging>
 
     <name>Minimal Maven OSS Parent POM of DV Bern AG</name>
-    <description>Maven Einstellung, die allgemeine Gueltigkeit fuer die Open-Source-Projekte der DV Bern AG haben</description>
+    <description>Maven Einstellung, die allgemeine Gültigkeit für die Open-Source-Projekte der DV Bern AG haben</description>
     <url>https://github.com/dvbern/oss-maven-parent-pom-minimal</url>
+
+    <!-- <editor-fold desc="governance" defaultstate="collapsed"> -->
     <organization>
         <name>DV Bern AG</name>
         <url>https://www.dvbern.ch/</url>
@@ -35,21 +37,24 @@
             </roles>
         </developer>
     </developers>
+    <!-- </editor-fold> -->
 
+    <!-- <editor-fold desc="scm" defaultstate="collapsed"> -->
     <scm>
         <url>https://github.com/dvbern/oss-maven-parent-pom-minimal.git</url>
         <connection>scm:git:https://github.com/dvbern/oss-maven-parent-pom-minimal.git</connection>
         <developerConnection>scm:git:https://github.com/dvbern/oss-maven-parent-pom-minimal.git</developerConnection>
     </scm>
+    <!-- </editor-fold> -->
 
+    <!-- <editor-fold desc="properties" defaultstate="collapsed"> -->
     <properties>
-
         <maven-compiler-plugin.javaversion>21</maven-compiler-plugin.javaversion>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- plugin versions for default lifecycle -->
+        <!-- <editor-fold desc="plugin versions: default lifecycle" defaultstate="collapsed"> -->
         <maven-clean-plugin.version>3.5.0</maven-clean-plugin.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
         <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
@@ -58,8 +63,9 @@
         <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
         <maven-install-plugin.version>3.1.4</maven-install-plugin.version>
         <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
+        <!-- </editor-fold> -->
 
-        <!-- other plugin versions -->
+        <!-- <editor-fold desc="plugin versions: other plugins" defaultstate="collapsed"> -->
         <central-publishing-maven-plugin.version>0.8.0</central-publishing-maven-plugin.version>
         <jgitflow-maven-plugin.version>1.0-m10</jgitflow-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.6.0</maven-checkstyle-plugin.version>
@@ -69,19 +75,22 @@
         <maven-pmd-plugin.version>3.27.0</maven-pmd-plugin.version>
         <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
         <spotbugs-maven-plugin.version>4.9.3.2</spotbugs-maven-plugin.version>
+        <!-- </editor-fold> -->
 
-        <!-- plugin versions for site lifecycle -->
+        <!-- <editor-fold desc="plugin versions: site lifecycle" defaultstate="collapsed"> -->
         <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
+        <!-- </editor-fold> -->
 
-        <!-- jgitflow config -->
+        <!-- <editor-fold desc="config: jgitflow" defaultstate="collapsed"> -->
         <jgitflow-maven-plugin.flowInitContext.masterBranchName>main</jgitflow-maven-plugin.flowInitContext.masterBranchName>
         <jgitflow-maven-plugin.flowInitContext.developBranchName>develop</jgitflow-maven-plugin.flowInitContext.developBranchName>
         <jgitflow-maven-plugin.flowInitContext.featureBranchPrefix>feature/</jgitflow-maven-plugin.flowInitContext.featureBranchPrefix>
         <jgitflow-maven-plugin.flowInitContext.releaseBranchPrefix>release/</jgitflow-maven-plugin.flowInitContext.releaseBranchPrefix>
         <jgitflow-maven-plugin.flowInitContext.hotfixBranchPrefix>hotfix/</jgitflow-maven-plugin.flowInitContext.hotfixBranchPrefix>
         <jgitflow-maven-plugin.flowInitContext.versionTagPrefix>v</jgitflow-maven-plugin.flowInitContext.versionTagPrefix>
+        <!-- </editor-fold> -->
 
-        <!-- enforcer config -->
+        <!-- <editor-fold desc="config: enforcer" defaultstate="collapsed"> -->
         <maven-enforcer-plugin.requireMavenVersion.version>3.9.8</maven-enforcer-plugin.requireMavenVersion.version>
         <maven-enforcer-plugin.requireJavaVersion.version>${maven-compiler-plugin.javaversion}</maven-enforcer-plugin.requireJavaVersion.version>
         <maven-enforcer-plugin.skip>false</maven-enforcer-plugin.skip>
@@ -91,8 +100,9 @@
         <maven-enforcer-plugin.requireReleaseDeps.phases>clean,deploy,site</maven-enforcer-plugin.requireReleaseDeps.phases>
         <maven-enforcer-plugin.requirePluginVersions.unCheckedPlugins/>
         <maven-enforcer-plugin.requirePluginVersions.additionalPlugins/>
+        <!-- </editor-fold> -->
 
-        <!-- plugin configurations -->
+        <!-- <editor-fold desc="config: others" defaultstate="collapsed"> -->
         <maven-checkstyle.version>10.12.7</maven-checkstyle.version>
         <code-conventions.version>5.0.0</code-conventions.version>
         <!-- do not deploy by default. OSS projects are published to maven central -->
@@ -103,13 +113,18 @@
         <maven-gpg-plugin.passphraseEnvName>MAVEN_GPG_PASSPHRASE</maven-gpg-plugin.passphraseEnvName>
         <!-- Credentials must be set in the servers section in settings.xml -->
         <central-publishing-maven-plugin.publishingServerId>central</central-publishing-maven-plugin.publishingServerId>
+        <!-- </editor-fold> -->
 
-        <!-- ******** internal configuration ******** -->
+        <!-- <editor-fold desc="config: internal" defaultstate="collapsed"> -->
         <!-- used by the development-mode profile: enable projects to skip custom stuff in development-mode -->
         <skip-code-validation>false</skip-code-validation>
+        <!-- </editor-fold> -->
+
     </properties>
+    <!-- </editor-fold> -->
 
     <profiles>
+        <!-- <editor-fold desc="development-mode" defaultstate="collapsed"> -->
         <profile>
             <id>development-mode</id>
             <properties>
@@ -120,6 +135,9 @@
                 <skip-javadoc>true</skip-javadoc>
             </properties>
         </profile>
+        <!-- </editor-fold> -->
+
+        <!-- <editor-fold desc="maven-central" defaultstate="collapsed"> -->
         <profile>
             <id>maven-central</id>
             <build>
@@ -170,19 +188,22 @@
                 </plugins>
             </build>
         </profile>
+        <!-- </editor-fold> -->
     </profiles>
 
     <build>
+        <!-- <editor-fold desc="pluginManagement" defaultstate="collapsed"> -->
         <pluginManagement>
             <plugins>
-                <!-- maven-clean-plugin (configuration only: clean:"default-clean") -->
+                <!-- <editor-fold desc="maven-clean-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-clean-plugin</artifactId>
                     <version>${maven-clean-plugin.version}</version>
                 </plugin>
+                <!-- </editor-fold> -->
 
-                <!-- maven-enforcer-plugin (activate validate:enforce) -->
+                <!-- <editor-fold desc="maven-enforcer-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
@@ -219,15 +240,17 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- </editor-fold> -->
 
-                <!-- maven-resources-plugin (configuration only: process-resources:"default-resources", process-test-resources:"default-testResources") -->
+                <!-- <editor-fold desc="maven-resources-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${maven-resources-plugin.version}</version>
                 </plugin>
+                <!-- </editor-fold> -->
 
-                <!-- maven-compiler-plugin (configuration only: compile:"default-compile", test-compile:"default-testCompile") -->
+                <!-- <editor-fold desc=" maven-compiler-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
@@ -240,15 +263,17 @@
                         <failOnWarning>true</failOnWarning>
                     </configuration>
                 </plugin>
+                <!-- </editor-fold> -->
 
-                <!-- maven-surefire-plugin (configuration only: test:"default-test") -->
+                <!-- <editor-fold desc="maven-surefire-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
                 </plugin>
+                <!-- </editor-fold> -->
 
-                <!-- maven-jar-plugin (configuration only: package:"default-jar") -->
+                <!-- <editor-fold desc="maven-jar-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
@@ -270,8 +295,9 @@
                         </archive>
                     </configuration>
                 </plugin>
+                <!-- </editor-fold> -->
 
-                <!-- maven-source-plugin (add package:jar-no-fork) -->
+                <!-- <editor-fold desc="maven-source-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
@@ -286,8 +312,9 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- </editor-fold> -->
 
-                <!-- maven-javadoc-plugin -->
+                <!-- <editor-fold desc="maven-javadoc-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
@@ -305,15 +332,17 @@
                         <!-- configuration: see jenkins settings.xml -->
                     </executions>
                 </plugin>
+                <!-- </editor-fold> -->
 
-                <!-- maven-install-plugin (configuration only: install:"default-install") -->
+                <!-- <editor-fold desc="maven-install-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>${maven-install-plugin.version}</version>
                 </plugin>
+                <!-- </editor-fold> -->
 
-                <!-- maven-deploy-plugin (configuration only: deploy:"default-deploy") -->
+                <!-- <editor-fold desc="maven-deploy-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
@@ -322,15 +351,17 @@
                         <skip>${maven-deploy-plugin.skip}</skip>
                     </configuration>
                 </plugin>
+                <!-- </editor-fold> -->
 
-                <!-- maven-failsafe-plugin (configuration only, no default phase/goal) -->
+                <!-- <editor-fold desc="maven-failsafe-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-failsafe-plugin.version}</version>
                 </plugin>
+                <!-- </editor-fold> -->
 
-                <!-- jgitflow-maven-plugin (configuration only, no default phase/goal)-->
+                <!-- <editor-fold desc="jgitflow-maven-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>ch.dvbern.oss.maven.jgitflow</groupId>
                     <artifactId>jgitflow-maven-plugin</artifactId>
@@ -395,14 +426,18 @@
                         </execution>
                     </executions>
                 </plugin>
+                <!-- </editor-fold> -->
 
+                <!-- <editor-fold desc="maven-site-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <!-- this is only exists since it is included by default and thus enforcer becomes picky -->
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
                     <version>${maven-site-plugin.version}</version>
                 </plugin>
+                <!-- </editor-fold> -->
 
+                <!-- <editor-fold desc="spotbugs-maven-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>com.github.spotbugs</groupId>
                     <artifactId>spotbugs-maven-plugin</artifactId>
@@ -442,6 +477,9 @@
                         <excludeFilterFile>rules/spotbugs/spotbugs-excludes.xml</excludeFilterFile>
                     </configuration>
                 </plugin>
+                <!-- </editor-fold> -->
+
+                <!-- <editor-fold desc="maven-pmd-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-pmd-plugin</artifactId>
@@ -470,6 +508,9 @@
                         </rulesets>
                     </configuration>
                 </plugin>
+                <!-- </editor-fold> -->
+
+                <!-- <editor-fold desc="maven-checkstyle-plugin" defaultstate="collapsed"> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
@@ -507,19 +548,20 @@
                         </dependency>
                     </dependencies>
                 </plugin>
+                <!-- </editor-fold> -->
             </plugins>
         </pluginManagement>
+        <!-- </editor-fold> -->
 
         <plugins>
-            <!-- maven-enforcer-plugin -->
-            <!-- explicitly activated here so projects don't forget to include this -->
+            <!-- <editor-fold desc="maven-enforcer-plugin" defaultstate="collapsed"> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
             </plugin>
+            <!-- </editor-fold> -->
 
-            <!-- maven-source-plugin -->
-            <!-- explicitly activated here so projects don't forget to include this, required by maven central -->
+            <!-- <editor-fold desc="maven-source-plugin" defaultstate="collapsed"> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -533,9 +575,9 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- </editor-fold> -->
 
-            <!-- maven-java-doc-plugin -->
-            <!-- explicitly activated here so projects don't forget to include this, required by maven central -->
+            <!-- <editor-fold desc="maven-javadoc-plugin" defaultstate="collapsed"> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -545,7 +587,7 @@
                     <detectJavaApiLink>false</detectJavaApiLink>
                 </configuration>
             </plugin>
-
+            <!-- </editor-fold> -->
         </plugins>
     </build>
 
