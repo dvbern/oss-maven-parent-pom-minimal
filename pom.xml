@@ -96,7 +96,7 @@
     </profiles>
 
     <properties>
-        <maven-compiler-plugin.javaversion>17</maven-compiler-plugin.javaversion>
+        <maven-compiler-plugin.javaversion>21</maven-compiler-plugin.javaversion>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
