@@ -1,11 +1,13 @@
 # DV Bern minimal parent pom
+
 This pom is inteded to provide a minimal configuration for maven projects.
 
 Mostly it defines plugin versions (via properties) **in pluginManagement**
-for all [default plugins](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Built-in_Lifecycle_Bindings)
-of the ["clean" and "default" lifecycle](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference)
+for
+all [default plugins](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Built-in_Lifecycle_Bindings)
+of
+the ["clean" and "default" lifecycle](https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Lifecycle_Reference)
 used by "pom" and "jar" packaging.
-
 
 In addition, (and to comply to company standards), the following additional configuration is made:
 * Configure deployment to DVB Nexus
@@ -14,3 +16,9 @@ In addition, (and to comply to company standards), the following additional conf
 * Add sources.jar
 * Add default entries to META-INF/MANIFEST.MF
 * Configure [maven-enforcer-plugin](http://maven.apache.org/enforcer/maven-enforcer-plugin/) when releasing.
+
+## Changelog
+### Version 4
+* Lots of plugin bumps
+* JGitflow: masterBranchName is now "main" by default, fix typo in developBranchName
+* Remove support for DVB nexus and switch to maven central publishing by default
