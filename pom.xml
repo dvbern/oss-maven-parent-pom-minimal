@@ -12,11 +12,17 @@
     <name>Minimal Maven OSS Parent POM of DV Bern AG</name>
     <description>Maven Einstellung, die allgemeine Gueltigkeit fuer die Open-Source-Projekte der DV Bern AG haben</description>
     <url>https://github.com/dvbern/oss-maven-parent-pom-minimal</url>
-
     <organization>
         <name>DV Bern AG</name>
         <url>https://www.dvbern.ch/</url>
     </organization>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
     <developers>
         <developer>
@@ -30,87 +36,14 @@
         </developer>
     </developers>
 
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
     <scm>
         <url>https://github.com/dvbern/oss-maven-parent-pom-minimal.git</url>
         <connection>scm:git:https://github.com/dvbern/oss-maven-parent-pom-minimal.git</connection>
         <developerConnection>scm:git:https://github.com/dvbern/oss-maven-parent-pom-minimal.git</developerConnection>
     </scm>
 
-    <profiles>
-        <profile>
-            <id>development-mode</id>
-            <properties>
-                <skipTests>true</skipTests>
-                <skipITs>true</skipITs>
-                <!-- add a custom property for simpler integration into projects -->
-                <skip-code-validation>true</skip-code-validation>
-                <skip-javadoc>true</skip-javadoc>
-            </properties>
-        </profile>
-        <profile>
-            <id>maven-central</id>
-            <build>
-                <plugins>
-
-                    <!-- <editor-fold desc="maven-gpg-plugin" defaultstate="collapsed"> -->
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-gpg-plugin</artifactId>
-                        <version>${maven-gpg-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                                <phase>verify</phase>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <signer>bc</signer>
-                            <keyEnvName>MAVEN_GPG_PRIVATE_KEY</keyEnvName>
-                            <passphraseEnvName>MAVEN_GPG_PASSPHRASE</passphraseEnvName>
-                        </configuration>
-                    </plugin>
-                    <!-- </editor-fold> -->
-
-                    <!-- <editor-fold desc="central-publishing-maven-plugin" defaultstate="collapsed"> -->
-                    <plugin>
-                        <groupId>org.sonatype.central</groupId>
-                        <artifactId>central-publishing-maven-plugin</artifactId>
-                        <version>${central-publishing-maven-plugin.version}</version>
-                        <executions>
-                            <execution>
-                                <id>publish-to-central</id>
-                                <goals>
-                                    <goal>publish</goal>
-                                </goals>
-                                <phase>deploy</phase>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <autoPublish>true</autoPublish>
-                            <waitUntil>published</waitUntil>
-                        </configuration>
-                    </plugin>
-                    <!-- </editor-fold> -->
-
-                </plugins>
-
-            </build>
-
-        </profile>
-    </profiles>
-
     <properties>
+
         <maven-compiler-plugin.javaversion>21</maven-compiler-plugin.javaversion>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -178,6 +111,69 @@
         <!-- used by the development-mode profile: enable projects to skip custom stuff in development-mode -->
         <skip-code-validation>false</skip-code-validation>
     </properties>
+
+    <profiles>
+        <profile>
+            <id>development-mode</id>
+            <properties>
+                <skipTests>true</skipTests>
+                <skipITs>true</skipITs>
+                <!-- add a custom property for simpler integration into projects -->
+                <skip-code-validation>true</skip-code-validation>
+                <skip-javadoc>true</skip-javadoc>
+            </properties>
+        </profile>
+        <profile>
+            <id>maven-central</id>
+            <build>
+                <plugins>
+
+                    <!-- <editor-fold desc="maven-gpg-plugin" defaultstate="collapsed"> -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${maven-gpg-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <phase>verify</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <signer>bc</signer>
+                            <keyEnvName>MAVEN_GPG_PRIVATE_KEY</keyEnvName>
+                            <passphraseEnvName>MAVEN_GPG_PASSPHRASE</passphraseEnvName>
+                        </configuration>
+                    </plugin>
+                    <!-- </editor-fold> -->
+
+                    <!-- <editor-fold desc="central-publishing-maven-plugin" defaultstate="collapsed"> -->
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                        <version>${central-publishing-maven-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>publish-to-central</id>
+                                <goals>
+                                    <goal>publish</goal>
+                                </goals>
+                                <phase>deploy</phase>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <autoPublish>true</autoPublish>
+                            <waitUntil>published</waitUntil>
+                        </configuration>
+                    </plugin>
+                    <!-- </editor-fold> -->
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
     <build>
         <pluginManagement>
